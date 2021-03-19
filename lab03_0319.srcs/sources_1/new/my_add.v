@@ -13,6 +13,7 @@ module my_add #(
    integer i;
    
    always @(*) begin
+        carry = 1'b0
         for (i=0;i<BITWIDTH;i=i+1)
             begin
             temp_dout[i] = (ain[i] ^ bin[i] ^ carry);
