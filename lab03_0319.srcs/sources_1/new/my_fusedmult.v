@@ -13,21 +13,17 @@ module my_fusedmult #(
     wire [2*BITWIDTH-1:0] tempMult;
     wire [2*BITWIDTH-1:0] tempAdd;
     
-    
-    
     always @(posedge clk) begin
         if(en == 1) begin
             acc = tempAdd;
-            my_mul #(.BITWIDTH(BITWIDTH)) mult(.ain(ain),.bin(bin),.dout(tempMult));
-            my_add #(.BITWIDTH(2*BITWIDTH)) add(.ain(acc),.bin(tempMult),.dout(tempAdd),.overflow());
-            dout = tempAdd;
+            dout = acc;
         end
         else begin
             acc = 0;
-            dout = 0;
         end
     end
     
-
+    my_mul #(.BITWIDTH(BITWIDTH)) mult(.ain(ain),.bin(bin),.dout(tempMult));
+    my_add #(.BITWIDTH(2*BITWIDTH)) add(.ain(acc),.bin(tempMult),.dout(tempAdd),.overflow());
     
 endmodule
