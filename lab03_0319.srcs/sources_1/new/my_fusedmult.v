@@ -26,6 +26,6 @@ module my_fusedmult #(
     
     my_mul #(.BITWIDTH(BITWIDTH)) mult(.ain(ain),.bin(bin),.dout(tempMult));
     my_add #(.BITWIDTH(2*BITWIDTH)) add(.ain(acc),.bin(tempMult),.dout(tempAdd),.overflow());
-    assign dout = acc;
+    assign dout = tempAdd;
     
 endmodule
