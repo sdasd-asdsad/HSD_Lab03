@@ -6,24 +6,22 @@ module my_fusedmult #(
         input [BITWIDTH-1:0] bin,
         input en,
         input clk,
-        output [2*BITWIDTH-1:0] dout
+        output reg [2*BITWIDTH-1:0] dout
     );
     
-    reg [2*BITWIDTH-1:0] acc;
     wire [2*BITWIDTH-1:0] tempMult;
     wire [2*BITWIDTH-1:0] tempAdd;
     
     always @(posedge clk) begin
         if(en == 1) begin
-            acc = tempAdd;
-            dout = acc;
+            dout = tempAdd;
         end
         else begin
-            acc = 0;
+            dout = 0;
         end
     end
     
     my_mul #(.BITWIDTH(BITWIDTH)) mult(.ain(ain),.bin(bin),.dout(tempMult));
-    my_add #(.BITWIDTH(2*BITWIDTH)) add(.ain(acc),.bin(tempMult),.dout(tempAdd),.overflow());
+    my_add #(.BITWIDTH(2*BITWIDTH)) add(.ain(dout),.bin(tempMult),.dout(tempAdd),.overflow());
     
 endmodule
